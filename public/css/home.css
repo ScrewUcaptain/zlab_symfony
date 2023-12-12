@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+* {
+	font-family: 'Lato', sans-serif;
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	height: 100vh;
+	background: linear-gradient(#6fbbb7,#bb6f73);
+}
+
+a:visited {
+	color: unset;
+}
+a {
+	text-decoration: none;
+	background:
+    linear-gradient(
+      to right,
+      #6fbbb7,
+      #6fbbb7
+    ),
+    linear-gradient(
+      to right,
+      rgba(255, 0, 0, 1),
+      rgba(255, 0, 180, 1),
+      rgba(0, 100, 200, 1)
+  );
+	background-size: 100% 3px, 0 3px;
+	background-position: 100% 100%, 0 100%;
+  	background-repeat: no-repeat;
+	transition: background-size 400ms;
+}
+a:hover {
+	background-size: 0 3px, 100% 3px;
+  }
+
+.navbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background: #003460;
+	color: #FFF ;
+	padding: 0 1.5rem;
+	font-size: 2rem;
+	font-weight: bold;
+}
+
+.navbar-brand {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.navbar-menu {
+	padding: 2rem;
+	flex-grow: 2;
+}
+
+.navbar-link {
+	margin-left: 1.5rem;
+}
+
+.navbar-end {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.app-logo {
+	width: 100px;
+}
+
+.intro {
+	max-width: 60vw;
+	height: 100vh;
+	margin: auto;
+	font-size: 2rem;
+	color: #161B22;
+	text-align: center;
+}
+
+.intro-title {
+	text-decoration: underline;
+}
+
+.intro-brand {
+	font-size: 3rem;
+	color: #003460;
+	margin-right: 0.25rem;
+}
+
+.intro h6 {
+	text-decoration: underline;
+}

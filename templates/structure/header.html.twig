@@ -1,0 +1,25 @@
+<nav class="navbar">
+	<div class="navbar-brand">
+		<a class="navbar-item" style="background: unset" href="{{ path('app_home') }}">
+			<img class="app-logo" src="{{ asset('images/logo.jpg') }}" alt="ZlabLogo">
+		</a>
+		<h1>Z-LAB</h1>
+	</div>
+	<div class="navbar-menu">
+		<div class="navbar-end">
+		{#<pre>
+			{{ dump(app.user) }}
+		</pre>#}
+			<a class="navbar-link" href="{{ path('app_home') }}">Browse</a>
+			<a class="navbar-link" href="{{ path('app_register') }}">Register</a>
+			{#<a class="navbar-link" href="{{ path('user_playlists', {userId: app.user.id}) }}">My Lab</a>#}
+			{% if app.user %}
+			<a class="navbar-link" href="{{ path('app_logout') }}">Logout</a>
+			{% else %}
+				<a class="navbar-link" href="{{ path('app_login') }}">Login</a>
+			{% endif %}
+			
+			
+		</div>
+	</div>
+</nav>

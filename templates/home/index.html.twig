@@ -1,20 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}LAB MUSIK{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+	<section class="intro">
+		<h3 class="intro-title">Welcome to Z-lab !</h3>
+		<p class="intro-text">
+			<span class="intro-brand">Z-Lab</span> is a sharing platform for musical playlists. <br>
+			You can discover playlist from the community, <br>
+			create your own playlist, share it or keep it for yourself. <br>
+			Have fun !
+		</p>
+		<h6>Checkout the trending playlist</h6>
+	</section>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/ScrewUcaptain/Documents/Workspace/Projet/zlab_symfony/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/ScrewUcaptain/Documents/Workspace/Projet/zlab_symfony/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
-    </ul>
-</div>
+	<section class="trends">
+		<h3 class="trends-title"></h3>                        
+		<div class="trends-list">
+			{% for playlist in playlists %}
+				<div class="trends-item">
+					<a href="/playlist/{{ playlist.id }}">
+						<img src="{{ playlist.image }}" alt="{{ playlist.name }}" class="trends-item-img">
+						<h4 class="trends-item-title">{{ playlist.name }}</h4>
+					</a>
+				</div>
+			{% endfor %}
+		</div>
+	</section>                            
 {% endblock %}

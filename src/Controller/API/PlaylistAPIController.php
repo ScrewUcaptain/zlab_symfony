@@ -12,15 +12,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/api/playlist')]
 class PlaylistAPIController extends AbstractController
 {
-	#[Route('/playlists', name: 'user_playlists', methods: ['GET'])]
-	public function getUserPlaylists(EntityManagerInterface $em): Response
-	{
-		$playlists = $em->getRepository(Playlist::class)->findBy(['author' => $this->getUser()]);
-		return $this->json([
-			'success' => true,
-			'playlists' => $playlists,
-		]);
-	}
+	//#[Route('/playlists', name: 'user_playlists', methods: ['GET'])]
+	//public function getUserPlaylists(EntityManagerInterface $em): Response
+	//{
+	//	$playlists = $em->getRepository(Playlist::class)->findBy(['author' => $this->getUser()]);
+	//	return $this->json([
+	//		'success' => true,
+	//		'playlists' => $playlists,
+	//	]);
+	//}
 
 	#[Route('/playlists/trends', name: 'user_playlists', methods: ['GET'])]
 	public function getTrendsPlaylist(EntityManagerInterface $em): Response
