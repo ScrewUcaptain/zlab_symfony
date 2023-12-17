@@ -19,16 +19,13 @@ class Playlist
 	#[ORM\Column(length: 255)]
 	private ?string $name = null;
 
-	#[ORM\Column(type: Types::ARRAY)]
-	private array $songs = [];
-
 	#[ORM\Column]
 	private ?bool $isPublic = null;
 
 	#[ORM\Column]
 	private ?int $likes = null;
 
-	#[ORM\Column(length: 255)]
+	#[ORM\Column(length: 255, nullable: true)]
 	private ?string $cover = null;
 
 	#[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -44,9 +41,13 @@ class Playlist
 	#[ORM\JoinColumn(nullable: false)]
 	private ?User $author = null;
 
+	#[ORM\ManyToMany(targetEntity: Song::class, inversedBy: 'playlists', fetch: 'EAGER')]
+	private Collection $songs;
+
 	public function __construct()
 	{
 		$this->tags = new ArrayCollection();
+		$this->songs = new ArrayCollection();
 	}
 
 	public function getId(): ?int
@@ -62,18 +63,6 @@ class Playlist
 	public function setName(string $name): static
 	{
 		$this->name = $name;
-
-		return $this;
-	}
-
-	public function getSongs(): array
-	{
-		return $this->songs;
-	}
-
-	public function setSongs(array $songs): static
-	{
-		$this->songs = $songs;
 
 		return $this;
 	}
@@ -170,6 +159,30 @@ class Playlist
 	public function setAuthor(?User $author): static
 	{
 		$this->author = $author;
+
+		return $this;
+	}
+
+	/**
+	 * @return Collection<int, Song>
+	 */
+	public function getSongs(): Collection
+	{
+		return $this->songs;
+	}
+
+	public function addSong(Song $song): static
+	{
+		if (!$this->songs->contains($song)) {
+			$this->songs->add($song);
+		}
+
+		return $this;
+	}
+
+	public function removeSong(Song $song): static
+	{
+		$this->songs->removeElement($song);
 
 		return $this;
 	}

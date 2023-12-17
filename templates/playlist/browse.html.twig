@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Browse Playlist {% endblock %}
+{% block stylesheets %}
+	{{parent()}}
+	<link rel="stylesheet" href="{{asset('css/browse.css')}}">
+{% endblock %}
+
+{% block javascripts %}
+	{{parent()}}
+	<script src="{{asset('js/browse.js')}}"></script>
+{% endblock %}
+
+{% block body %}
+	<section class="browse">
+		<h1>Find Playlist that fit your needs !</h1>
+
+		<div class="tags">
+			{% for tag in tags %}
+				<div onclick="selectTag('{{tag.name}}', {{tag.id}})" class="tag-card" style="border: 1px solid {{tag.color}};box-shadow: {{tag.color}} 0px 5px 15px;color: #FFF">
+					<span>{{tag.name|upper}}</span>
+				</div>
+			{% endfor %}
+			<div onclick="selectTag()" class="tag-card" style="border: 1px solid #FFF;box-shadow: #FFF 0px 5px 15px;">
+					<span>All</span>
+			</div>
+		</div>
+		<div class="selected-tags">
+
+		</div>
+		<div class="playlists-container">
+
+		</div>
+	</section>
+{% endblock %}

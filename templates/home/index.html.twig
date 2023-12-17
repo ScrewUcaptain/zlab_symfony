@@ -12,17 +12,39 @@
 			create your own playlist, share it or keep it for yourself. <br>
 			Have fun !
 		</p>
-		<h6>Checkout the trending playlist</h6>
+		<br>
+		<h6 onclick="displayTrends()">Checkout the trending playlist</h6>
+		
 	</section>
 
-	<section class="trends">
-		<h3 class="trends-title"></h3>                        
+	<section class="trends" id="trends">
+		<h3 class="trends-title">Top Playlist</h3>                        
 		<div class="trends-list">
 			{% for playlist in playlists %}
 				<div class="trends-item">
-					<a href="/playlist/{{ playlist.id }}">
-						<img src="{{ playlist.image }}" alt="{{ playlist.name }}" class="trends-item-img">
-						<h4 class="trends-item-title">{{ playlist.name }}</h4>
+					<a href="{{path('playlist', {playlist: playlist.id} ) }}">
+						<div class="item-top">
+						<div class="list-ranking">{{loop.index}}.</div>
+						<div class="pl-image">
+						{% if playlist.cover is not null %}
+							<img src="{{asset('images/')}}{{playlist.cover}}" alt="">
+						{% else %}
+							<img src="{{asset('images/none.png')}}" alt="">
+						{% endif %}
+						</div>
+					</div>
+					<div class="item-mid">
+						<p class="pl-name">{{playlist.name}}</p>
+					</div>
+					<div class="item-bot">
+						<div class="pl-likes">
+						
+							<box-icon name='star' type='solid' color='#fbd902' style="margin-right: 0.25rem"></box-icon> {{playlist.likes}}
+						</div>
+						<div class="pl-play">
+							<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAABO0lEQVRYR+2YURHCMAyGVwdIAAdIYA6YAyTgAFCABCzMAUMBSEACDkZyt4fRtU3TLNvuaO94apJ+/E3Sy0yxsGUWxlNkIOpGvAq1bbsD5y38VlSQhP3GGNO4/JxAAHMD40PCQRwXhCpthwFQp8ydE1lgW9pKuYCOcMBVcAjH9QJA576DCwgNTpyoAtv/AvokVKSqQhsAejKh9IAgOQ1U6JoJpQuEyc2E0gdiQk0DxIASAeHb8/D1HLvBRUKJgAbOMQ2RyKnZgPBtxAq0lwgo9cp8MAgnAgreEPahvkF3VSGY6YAiYaYBYsDoAzFhdIEgOj6uVM6MWmVU23l7Sjvkp1dlFK1nPwNRwkUptOuSkwo2xn4F/bTuB5pzUKwBprL/VWiU3oMxjtIaC9/FFwDhYPCz8tcPSu6sEKXQF5AWxyUOYcV+AAAAAElFTkSuQmCC"/>
+						</div>
+					</div>
 					</a>
 				</div>
 			{% endfor %}

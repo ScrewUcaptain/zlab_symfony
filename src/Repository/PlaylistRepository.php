@@ -21,6 +21,16 @@ class PlaylistRepository extends ServiceEntityRepository
         parent::__construct($registry, Playlist::class);
     }
 
+	public function findByTag($tag)
+	{
+		return $this->createQueryBuilder('p')
+			->join('p.tags', 't')
+			->where('t.id = :tag')
+			->setParameter('tag',  $tag)
+			->getQuery()
+			->getResult();
+	}
+
 //    /**
 //     * @return Playlist[] Returns an array of Playlist objects
 //     */

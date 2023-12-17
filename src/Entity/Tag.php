@@ -25,6 +25,9 @@ class Tag
     #[ORM\ManyToMany(targetEntity: Playlist::class, mappedBy: 'tags')]
     private Collection $playlists;
 
+    #[ORM\Column(length: 255)]
+    private ?string $color = null;
+
     public function __construct()
     {
         $this->playlists = new ArrayCollection();
@@ -82,6 +85,18 @@ class Tag
         if ($this->playlists->removeElement($playlist)) {
             $playlist->removeTag($this);
         }
+
+        return $this;
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(string $color): static
+    {
+        $this->color = $color;
 
         return $this;
     }

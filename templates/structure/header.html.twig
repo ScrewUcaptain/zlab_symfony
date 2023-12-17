@@ -7,16 +7,25 @@
 	</div>
 	<div class="navbar-menu">
 		<div class="navbar-end">
-		{#<pre>
-			{{ dump(app.user) }}
-		</pre>#}
-			<a class="navbar-link" href="{{ path('app_home') }}">Browse</a>
-			<a class="navbar-link" href="{{ path('app_register') }}">Register</a>
-			{#<a class="navbar-link" href="{{ path('user_playlists', {userId: app.user.id}) }}">My Lab</a>#}
+			{% if page is not defined %}
+				{% set page = "" %}
+			{% endif %}
+			
+			{% if page is not same as "home" %}
+				<a class="navbar-link" href="{{ path('app_home') }}">Home</a>
+			{% endif %}
+			{% if page is not same as "browse" %}
+				<a class="navbar-link" href="{{ path('app_browse') }}">Browse</a>
+			{% endif %}
+			{% if page is not same as "lab" %}
+				<a class="navbar-link" style="margin-right: 3rem" href="{{ path('app_lab') }}">My Lab</a>
+			{% endif %}
+		
 			{% if app.user %}
-			<a class="navbar-link" href="{{ path('app_logout') }}">Logout</a>
+				<a class="navbar-link" style="font-size: 1.15rem" href="{{ path('app_logout') }}">Logout</a>
 			{% else %}
-				<a class="navbar-link" href="{{ path('app_login') }}">Login</a>
+				<a class="navbar-link" style="font-size: 1.15rem" href="{{ path('app_register') }}">Register</a>
+				<a class="navbar-link" style="font-size: 1.15rem" href="{{ path('app_login') }}">Login</a>
 			{% endif %}
 			
 			
