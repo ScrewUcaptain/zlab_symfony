@@ -1,0 +1,51 @@
+
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            {% block title %}Zlab Dashboard{% endblock %}
+        </title>
+		<link rel="stylesheet" href="{{asset('css/dashboard.css')}}">
+        {% block stylesheets %}
+        {% endblock %}
+
+		<script defer src="{{asset('js/dashboard.js')}}"></script>
+        {% block javascripts %}
+        {% endblock %}
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Assistant&display=swap" rel="stylesheet">
+		 <script defer src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    </head>
+    <body>
+        <nav class="db-nav">
+            <h3>
+                <a href="/dashboard">Dashboard Z LAB</a>
+            </h3>
+            <div class="db-nav_links">
+                <a href="/dashboard/users">Users</a>
+                <a href="/dashboard/playlists">Playlists</a>
+                <a href="/dashboard/songs">Songs</a>
+                <a href="/dashboard/tags">Tags</a>
+            </div>
+            <div class="db-nav_links">
+                <a href="/">back to website</a>
+            </div>
+        </nav>  
+        {% block body %}
+        <section class="db-home">
+            <h1>Zlab dashboard</h1>
+            <div class="db-home_infos">
+                <p>Users registers : {{nbrUsers}}.</p>
+                <p>Playlist created : {{nbrPlaylists}}. </p>
+                <p>Songs saved : {{nbrSongs}}. </p>
+                <p>Existing Tags: {{nbrTags}}. </p>
+                <p>Most liked Playlist : {{mostLikedPlaylist.name}} - {{mostLikedPlaylist.likes}} likes </p>
+            </div>
+
+        </section>
+        {% endblock %}
+    </body>
+</html>

@@ -44,16 +44,4 @@ class HomeController extends AbstractController
 			'page' => "lab",
 		]);
 	}
-
-	#[Route('/dashboard', name: 'admin_dashboard')]
-	public function dashboard(EntityManagerInterface $em): Response
-	{
-		if ($this->getUser() === null) {
-			return $this->redirectToRoute('app_login');
-		}
-		if (!in_array('ROLE_ADMIN', $this->getUser()->getRoles())) {
-			return $this->redirectToRoute('app_home');
-		}
-	}
-
 }

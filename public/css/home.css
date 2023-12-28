@@ -18,7 +18,6 @@ a:visited {
 }
 
 a {
-	text-decoration: none;
 	background:
     linear-gradient(
       to right,
@@ -35,6 +34,11 @@ a {
 	background-position: 100% 100%, 0 100%;
   	background-repeat: no-repeat;
 	transition: background-size 400ms;
+}
+
+a, a:hover, a:focus, a:active {
+    text-decoration: none;
+    color: inherit;
 }
 
 a:hover {
@@ -96,7 +100,7 @@ a:hover {
 
 .intro-brand {
 	font-size: 3rem;
-	color: #003460;
+	color: #6fbbb7;
 	margin-right: 0.25rem;
 }
 

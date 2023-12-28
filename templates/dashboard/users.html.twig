@@ -1,0 +1,49 @@
+{% extends "dashboard/index.html.twig" %}
+
+{% block body %}
+<section class="db-users">
+    <h1>Users</h1>
+    <table class="customTable">
+        <thead>
+            <tr>
+                <th>User id</th>
+                <th>User firstname</th>
+                <th>User lastname</th>
+                <th>User mail</th>
+                <th>thumbnail</th>
+                <th>User type</th>
+                <th>User verified</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td> {{user.id}} </td>
+                    <td> {{user.firstname}} </td>
+                    <td> {{user.lastname}} </td>
+                    <td> {{user.email}} </td>
+                    <td> {% if user.thumbnail is same as null %}
+                    No Thumbnail
+                    {% else %}
+                        {{user.thumbnail}}
+                    {% endif %}
+                     </td>
+                    <td> {{user.roles[0]|raw}} </td>
+                    <td>
+                        {% if user.isVerified %}
+                        Yes
+                        {% else %}
+                        No
+                        {% endif %}
+                    </td>
+                    <td>
+                        <box-icon name='trash-alt' type='solid' color='#f33c3c' ></box-icon>
+                        <box-icon name='edit-alt' type='solid' color='#00F' ></box-icon>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}
