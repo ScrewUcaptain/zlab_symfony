@@ -3,6 +3,11 @@
 {% block body %}
     <section class="db-users">
     <h1>Playlists</h1>
+    <button class="add-btn">
+        <a href="{{path('admin_add_playlist')}}">
+            Add Playlist
+        </a>
+    </button>
     <table class="customTable">
         <thead>
             <tr>
@@ -44,8 +49,11 @@
                     </td>
                     
                     <td>
-                        <box-icon name='trash-alt' type='solid' color='#f33c3c' ></box-icon>
-                        <box-icon name='edit-alt' type='solid' color='#00F' ></box-icon>
+                        <box-icon name='trash-alt' type='solid' color='#f33c3c' onclick="deletePlaylist({{playlist.id}})" ></box-icon>
+                        <a href="{{ path('admin_update_playlist', {playlist: playlist.id}) }}">
+                            <box-icon name='edit-alt' type='solid' color='#00F' ></box-icon>
+                        </a>
+                    
                     </td>
                 </tr>
             {% endfor %}

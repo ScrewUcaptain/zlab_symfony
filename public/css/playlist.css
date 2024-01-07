@@ -30,6 +30,14 @@ a, a:hover, a:visited {
 	border: 1px solid #E00582;
 }
 
+.song-infos span {
+	margin: 0 1rem;
+}
+
+.song-item box-icon {
+	margin-left: 1rem;
+}
+
 .song-item {
 	border: 2px solid #FFF;
 	padding: 1rem;
@@ -81,6 +89,8 @@ a, a:hover, a:visited {
 }
 
 .form-song {
+	display: flex;
+	flex-direction: column;
 	padding: 2rem;
 	background-color: #fff;
 	border-radius: 4px;
@@ -93,7 +103,10 @@ a, a:hover, a:visited {
 	align-items: center;
 }
 .form-song div label {
-	margin: 0 2rem 0 0;
+	margin-right: 2rem;
+}
+.form-song input {
+	padding: 0.25rem;
 }
 
 .close-modal:hover box-icon {
@@ -101,9 +114,13 @@ a, a:hover, a:visited {
 	transform: scale(1.1);
 }
 
+.close-modal {
+	text-align: end;
+}
+
 .btn-addSong {
-	height: 33px;
-	width: 100px;
+	margin-top: 2rem;
+	padding: 0.5rem;
 	cursor: pointer;
 	background: #003460;
 	color: #FFF;

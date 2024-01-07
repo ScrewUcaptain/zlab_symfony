@@ -12,7 +12,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 #[Route('/playlist')]
 class PlaylistController extends AbstractController
@@ -35,19 +37,6 @@ class PlaylistController extends AbstractController
 		]);
 	}
 
-	#[Route('/all', name: 'all_playlists')]
-	public function getAllPlaylists(EntityManagerInterface $em, CustomSerializer $serializer)
-	{
-		$playlists = $em->getRepository(Playlist::class)->findBy(["isPublic" => true], ['likes' => 'DESC']);
-
-		$test = $serializer->objectsToArray($playlists, ['author']);
-
-		return new JsonResponse([
-			'success' => true,
-			'playlists' => $test
-		]);
-	}
-
 	#[Route('/tag/{tag}', name: 'tag_playlists')]
 	public function getPlaylistsTag(Tag $tag, EntityManagerInterface $em, CustomSerializer $serializer)
 	{
@@ -61,13 +50,39 @@ class PlaylistController extends AbstractController
 		]);
 	}
 
+	#[Route('/new', name: 'new_playlist')]
+	public function newPlaylist(Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
+	{
+		$body = json_decode($request->getContent(), true);
+		$name = htmlspecialchars($body['name'], ENT_QUOTES | ENT_HTML5);
+		$tags = $body['tags'];
+		$privacy = $body['privacy'];
+		$playlist = new Playlist();
+		$playlist->setName($name);
+		$playlist->setAuthor($this->getUser());
+		$playlist->setIsPublic(!$privacy);
+		$playlist->setLikes(0);
+		$playlist->setCreatedAt(new \DateTime());
+		$playlist->setUpdatedAt(new \DateTime());
+		foreach ($tags as $tagId) {
+			$tag = $em->getRepository(Tag::class)->findOneBy(['id' => $tagId]);
+			$playlist->addTag($tag);
+		}
+		$em->persist($playlist);
+		$em->flush();
+
+		return new JsonResponse([
+			'success' => true,
+		]);
+	}
+
 	#[Route('/{playlist}', name: 'playlist')]
 	public function getPlaylist(Playlist $playlist): Response
 	{
 		if (
 			!$playlist->isPublic() &&
-			$playlist->getAuthor() !== $this->getUser() &&
-			!$this->isGranted('ROLE_ADMIN')
+			!$this->isGranted('ROLE_ADMIN') &&
+			$playlist->getAuthor() !== $this->getUser() 
 		) {
 			return $this->redirectToRoute('app_home');
 		}
@@ -88,22 +103,47 @@ class PlaylistController extends AbstractController
 		if (!$user || $this->getUser() !== $user) {
 			return $this->redirectToRoute('app_home');
 		}
-		$playlists = $user->getPlaylists();
+		// $playlists = $user->getPlaylists();
 		return $this->render('playlist/index.html.twig', [
 			'playlist' => $playlist,
 		]);
 	}
 
 	#[Route('/{playlist}/add', name: 'add_song_playlist')]
-	public function addSongToPlaylist(Request $request, Playlist $playlist): Response
+	public function addSongToPlaylist(Request $request, EntityManagerInterface $em, Playlist $playlist): Response
 	{
 		$body = json_decode($request->getContent(), true);
 		$songName = htmlspecialchars($body['song'], ENT_QUOTES | ENT_HTML5);
-		dd($songName);
+		$artist = htmlspecialchars($body['artist'], ENT_QUOTES | ENT_HTML5);
+		$year = htmlspecialchars($body['year'], ENT_QUOTES | ENT_HTML5);
+		$url = htmlspecialchars($body['url'], ENT_QUOTES | ENT_HTML5);
 		$song = new Song();
-		$song->setName($body['song']);
+		$song->setName($songName);
+		$song->setArtist($artist);
+		$song->setYear($year);
+		$song->setUrl($url);
+		$em->persist($song);
+		$playlist->addSong($song);
+		$em->persist($playlist);
+		$em->flush();
+
 		return $this->render('playlist/index.html.twig', [
 			'playlist' => $playlist,
+		]);
+	}
+
+	#[Route('/{playlist}/delete', name: 'delete_user_playlist')]
+	public function deletePlaylist(EntityManagerInterface $em, Playlist $playlist): Response
+	{
+		$RequestingUser = $this->getUser();
+		if ($RequestingUser !== $playlist->getAuthor() && !$this->isGranted('ROLE_SUPER_ADMIN')) {
+			return $this->redirectToRoute('app_home');
+		}
+		$em->remove($playlist);
+		$em->flush();
+
+		return new JsonResponse([
+			'success' => true,
 		]);
 	}
 }

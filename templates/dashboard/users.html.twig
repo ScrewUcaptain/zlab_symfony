@@ -38,8 +38,10 @@
                         {% endif %}
                     </td>
                     <td>
-                        <box-icon name='trash-alt' type='solid' color='#f33c3c' ></box-icon>
-                        <box-icon name='edit-alt' type='solid' color='#00F' ></box-icon>
+                        <box-icon name='trash-alt' type='solid' color='#f33c3c' onclick="deleteUser({{user.id}})"></box-icon>
+                        <a href="{{ path('admin_update_user', {user: user.id}) }}">
+                            <box-icon name='edit-alt' type='solid' color='#00F' ></box-icon>
+                        </a>
                     </td>
                 </tr>
             {% endfor %}

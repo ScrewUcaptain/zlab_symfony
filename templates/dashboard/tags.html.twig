@@ -3,6 +3,11 @@
 {% block body %}
     <section class="db-users">
     <h1>Tags</h1>
+    <button class="add-btn">
+        <a href="{{path('admin_add_tag')}}">
+            Add Tag
+        </a>
+    </button>
     <table class="customTable">
         <thead>
             <tr>
@@ -18,11 +23,13 @@
                 <tr>
                     <td>{{tag.id}}</td>
                     <td>{{tag.name}}</td>
-                    <td>{{tag.color}}</td>
+                    <td>{{tag.color}} - <span style="width:10px;height:10px;background:{{tag.color}};color:{{tag.color}}">COLOR</span></td>
                     <td>{{tag.createdAt|date("m/d/Y")}}</td>
                     <td>
-                        <box-icon name='trash-alt' type='solid' color='#f33c3c' ></box-icon>
-                        <box-icon name='edit-alt' type='solid' color='#00F' ></box-icon>
+                        <box-icon name='trash-alt' type='solid' color='#f33c3c' onclick="deleteTag({{tag.id}})"></box-icon>
+                        <a href="{{ path('admin_update_tag', {tag: tag.id}) }}">
+                            <box-icon name='edit-alt' type='solid' color='#00F' ></box-icon>
+                        </a>
                     </td>
                 </tr>
             {% endfor %}

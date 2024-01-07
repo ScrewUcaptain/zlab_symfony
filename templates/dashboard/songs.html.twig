@@ -3,6 +3,11 @@
 {% block body %}
     <section class="db-users">
     <h1>Songs</h1>
+    <button class="add-btn">
+        <a href="{{path('admin_add_song')}}">
+            Add Song
+        </a>
+    </button>
     <table class="customTable">
         <thead>
             <tr>
@@ -23,8 +28,10 @@
                     <td>{{song.year}}</td>
                     <td>{{song.url}}</td>
                     <td>
-                        <box-icon name='trash-alt' type='solid' color='#f33c3c' ></box-icon>
-                        <box-icon name='edit-alt' type='solid' color='#00F' ></box-icon>
+                        <box-icon name='trash-alt' type='solid' color='#f33c3c' onclick="deleteSong({{song.id}})"></box-icon>
+                        <a href="{{ path('admin_update_song', {song: song.id}) }}">
+                            <box-icon name='edit-alt' type='solid' color='#00F' ></box-icon>
+                        </a>
                     </td>
                 </tr>
             {% endfor %}

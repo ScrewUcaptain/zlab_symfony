@@ -19,15 +19,20 @@
 			<h3>{{playlist.name}}</h3>
 			<div class="infos">
 				<div>Likes : {{playlist.likes}} </div>
-				<div>author : {{playlist.author.firstname}} </div>
+				<div>Author : {{playlist.author.firstname}} </div>
 				<div>Created : {{playlist.createdAt|date('d/m/Y')}} </div>
 				<div>Updated : {{playlist.updatedAt|date('d/m/Y')}} </div>
-				<div>Nombre de sons : {{playlist.songs|length}}</div>
+				<div>Songs total: {{playlist.songs|length}}</div>
+				{% if app.user is same as playlist.author %}
+				<div>Privacy: {% if playlist.isPublic %} Public {% else %}
+					Private {% endif %}
+				 </div>
+				{% endif %}
 			</div>
 			{% if app.user is same as playlist.author %}
 			<div class="btn-gestion">
 				<button class="blue-button" onclick="openModalSong()"> Add Song </button>
-				<button class="pink-button"> Delete Playlist </button>
+				<button class="pink-button" onclick="deletePlaylist({{playlist.id}})"> Delete Playlist </button>
 			</div>
 			{% endif %}
 			
@@ -35,49 +40,51 @@
 		<div class="songs-list">
 			<h2>Songs</h2>
 			{% for song in playlist.songs %}
-				<a href="{{song.url}}" target="_blank">
-					<div class="song-item" >
-					<div class="song-infos"> {{song.name}} - {{song.artist}} -
-					{% if song.year is not null %}{{song.year}} {% else %}
-					unknown date	{% endif %}
+				{% if song.url is not same as null and song.url %}
+					<a href="{{song.url}}" target="_blank">
+				{% else %}
+					<a href="#">
+				{% endif %}
+						<div class="song-item" >
+						<div class="song-infos"> <span>{{song.name}}</span>  - <span>{{song.artist}}</span> -
+						{% if song.year is not null %}<span>{{song.year}}</span> {% else %}
+						unknown date{% endif %}
+						</div>
+						<box-icon style="cursor: pointer" name='play-circle' color='#ffffff'></box-icon>
 					</div>
-					<box-icon style="cursor: pointer" name='play-circle' color='#ffffff'></box-icon>
-				</div>
 				</a>
 			{% endfor %}
 		
 		</div>
-		
-		{#<pre>
-			{{ dump(playlist) }}
-		</pre>#}
 	</section>
-
+	{% if app.user is same as playlist.author %}
 	<div class="modal-song">
-			<div class="form-song">
-				<span class="close-modal" onclick="closeModalSong()">
-					<box-icon  name='x'></box-icon>
-				</span>
-				<span class="error"></span>
-				<div>
-					<label for="song-name">Song name</label>
-					<input name="song-name" id="song-name" type="text">
-				</div>
-				<div>
-					<label for="song-artist">Artist</label>
-					<input name="song-artist" id="song-artist" type="text">
-				</div>
-				<div>
-					<label for="song-year">Year (optional)</label>
-					<input name="song-year" id="song-year" type="text">
-				</div>
-				<div>
-					<label for="song-url">Song url (youtube)</label>
-					<input name="song-url" id="song-url" type="text">
-				</div>
-				<button class="btn-addSong" onclick="addSong()">
-					Add
-				</button>
+		<div class="form-song">
+			<span class="close-modal" onclick="closeModalSong()">
+				<box-icon  name='x'></box-icon>
+			</span>
+			<span class="error"></span>
+			<div>
+				<label for="song-name">Song name</label>
+				<input name="song-name" id="song-name" type="text">
 			</div>
+			<div>
+				<label for="song-artist">Artist</label>
+				<input name="song-artist" id="song-artist" type="text">
+			</div>
+			<div>
+				<label for="song-year">Year (optional)</label>
+				<input name="song-year" id="song-year" type="text">
+			</div>
+			<div>
+				<label for="song-url">Song url (youtube)</label>
+				<input name="song-url" id="song-url" type="text">
+			</div>
+			<button class="btn-addSong" onclick="addSong()">
+				Add
+			</button>
 		</div>
+	</div>
+	{% endif %}
+	
 {% endblock %}

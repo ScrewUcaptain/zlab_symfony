@@ -18,15 +18,16 @@
     {% endfor %}
 
     <div class="form-container">
-		<h1>Register</h1>
-
 		{{ form_errors(registrationForm) }}
 
 		{{ form_start(registrationForm) }}
 			{{ form_row(registrationForm.email) }}
 			{{ form_row(registrationForm.firstname) }}
 			{{ form_row(registrationForm.lastname) }}
-			{{ form_row(registrationForm.thumbnail) }}
+			<div style="margin: 2rem 0" class="thumbnail-input">
+				{{ form_row(registrationForm.thumbnail) }}
+				<div class="image-name"></div>
+			</div>
 			{{ form_row(registrationForm.password, {
 				label: 'Password'
 			}) }}
@@ -34,4 +35,8 @@
 			<button type="submit" class="btn">Register</button>
 		{{ form_end(registrationForm) }}
 	</div>
+
+	<script>
+		
+	</script>
 {% endblock %}

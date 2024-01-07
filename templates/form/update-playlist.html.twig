@@ -1,0 +1,10 @@
+{% extends "dashboard/index.html.twig" %}
+
+{% block title %} Update Playlist{% endblock %}
+
+{% block body %}
+    <h1>Update Playlist: "{{playlist.name}}" </h1>
+    <section class="form-admin">
+        {{ form(form) }}
+    </section>
+{% endblock %}

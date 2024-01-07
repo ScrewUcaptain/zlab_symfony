@@ -5,6 +5,7 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
   thumbnails: '%kernel.project_dir%/public/images/thumbnails'
+  covers: '%kernel.project_dir%/public/images/covers'
   
 services:
     # default configuration for services in *this* file

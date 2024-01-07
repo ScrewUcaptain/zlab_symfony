@@ -36,11 +36,18 @@ class HomeController extends AbstractController
 	#[Route('/lab', name: 'app_lab')]
 	public function lab(EntityManagerInterface $em): Response
 	{
-		if ($this->getUser() === null) {
+		$user = $this->getUser();
+		if (!$user) {
 			return $this->redirectToRoute('app_login');
-		}
+		} 
+		$playlists = $em->getRepository(Playlist::class)->findBy(
+			['author' => $user], ['name' => 'ASC']);
+		$tags = $em->getRepository(Tag::class)->findAll();
+	
 		return $this->render('playlist/lab.html.twig', [
-			//'tags' => $tags,
+			'user' => $user,
+			'playlists' => $playlists,
+			'tags' => $tags,
 			'page' => "lab",
 		]);
 	}

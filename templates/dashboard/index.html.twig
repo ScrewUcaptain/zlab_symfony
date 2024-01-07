@@ -47,5 +47,14 @@
 
         </section>
         {% endblock %}
+
+        <script>
+            let gPaths = {
+                deleteSong: "{{path('admin_delete_song')}}",
+                deleteUser: "{{path('admin_delete_user')}}",
+                deletePlaylist: "{{path('admin_delete_playlist')}}",
+                deleteTag: "{{path('admin_delete_tag')}}",
+            }
+        </script>
     </body>
 </html>

@@ -2,10 +2,106 @@
 
 {% block title %}Your LAB{% endblock %}
 
+{% block javascripts %}
+	{{ parent()}}
+	<script defer src="{{ asset('js/lab.js') }}"></script>
+{% endblock %}
+
+{% block stylesheets %}
+{{ parent()}}
+	<link rel="stylesheet" href="{{ asset('css/lab.css') }}">
+{% endblock %}
+
 {% block body %}
 	<section class="lab" style="margin: 10rem auto">
 		
 		<h1>Create and Manage your playlist in the LAB</h1>
+
+		<div class="lab-container">
+			<div class="profil">
+			<h3>Your profil</h3>
+				<div class="profil-thumbnail">
+				{% if user.thumbnail and user.thumbnail is not same as null %}
+					<img src="{{asset('images/thumbnails/')}}{{user.thumbnail}}" alt="">
+				{% else %}
+					<img src="{{asset('images/thumbnails/default.png')}}" alt="">
+				{% endif %}
+				</div>
+				<div class="profil-infos">
+					<div class="profil-lastname">{{user.lastname}} {{user.firstname}}</div>
+					<div class="profil-email">{{user.email}}</div>
+					<button class="blue-button" onclick="updateProfil()"> Modify </button>
+				</div>
+			</div>
+
+			<div class="playlists-container">
+				<h3 style="font-size: 24px">Your playlists</h3>
+				<button class="btn-add" onclick="openModal()">Create Playlist</button>
+				<div class="playlists">
+					{% if playlists is empty %}
+					No playlisy yet, <br>
+					Create your first playlist !
+				{% endif %}
+					{% for playlist in playlists %}
+						<div class="playlist-card">
+							<div class="playlist-infos">
+								<div>{{playlist.name}}</div>
+								<div>
+									{% for tag in playlist.tags %}
+										<span class="tag">{{tag.name}}</span>
+									{% endfor %}
+									-- {{playlist.likes}} <box-icon name='star' type='solid' color='#fbd902' style="padding-top: 10px;"></box-icon>
+								</div>
+							</div>
+							<div class="playlist-actions">
+								
+								<box-icon name='right-arrow' type='solid' ><a href="{{path('playlist', {'playlist': playlist.id})}}"></a></box-icon>
+								<box-icon type='solid' name='edit-alt'></box-icon>
+								<box-icon name='trash' type='solid' ></box-icon>
+							</div>
+						</div>
+
+					{% endfor %}
+					<div class="modal-playlist">
+						<div class="form-playlist">
+							<span class="close-modal" onclick="closeModal()">
+								<box-icon  name='x'></box-icon>
+							</span>
+							<h4 style="text-align: center">New playlist</h4>
+							<span id="error"></span>
+							<div>
+								<label for="playlist-name">Playlist name</label>
+								<input style="padding:0.25rem" name="playlist-name" id="playlist-name" type="text">
+							</div>
+							<label for="tags">Tags:</label>
+							<select name="tags" multiple="true" id="playlist-tags">
+								<option value="">--Please choose at least one tag --</option>
+								{% for tag in tags %}
+									<option value="{{tag.id}}">{{tag.name}}</option>
+								{% endfor %}
+							</select>
+							<fieldset id="playlist-privacy">
+								<legend>Privacy: </legend>
+								<div>
+									<input type="radio" id="public" name="privacy" value="public"/>
+									<label for="public">Public</label>
+								</div>
+								<div>
+									<input type="radio" id="private" name="privacy" value="private" checked/>
+									<label for="private">Private</label>
+								</div>
+							</fieldset>
+							{# <div>
+								<label for="playlist-cover">Choose a cover (optional) </label>
+								<input type="file" id="cover" name="cover" accept="image/png, image/jpeg" />
+							</div> #}
+							<button class="btn-create" onclick="createPlaylist()">
+								Create
+							</button>
+						</div>
+					</div>
+			</div>
+		</div>
 
 	</section>
 {% endblock %}

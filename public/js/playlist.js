@@ -32,3 +32,23 @@ function addSong() {
 
   closeModalSong();
 }
+
+
+function deletePlaylist(playlistId) {
+  if (confirm("Are you sure you want to delete this playlist ?")) {
+    fetch("/playlist/" + playlistId + "/delete", {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      method: "DELETE",
+    }).then((response) => {
+      if (response.ok) {
+        alert("Playlist deleted successfully");
+        location.href = "/lab"
+      } else {
+        alert("An error occured");
+      }
+    });
+  }
+}
