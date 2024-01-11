@@ -1,7 +1,7 @@
 .playlist-container {
 	display: flex;
 	color: #fff;
-	margin: 8rem auto;
+	margin: 150px auto;
 	height: 100vh;
 }
 aside {
@@ -12,7 +12,6 @@ aside {
 }
 
 a, a:hover, a:visited {
-	color: #FFF;
 	text-decoration: none;
 }
 
@@ -27,7 +26,6 @@ a, a:hover, a:visited {
 .songs-list {
 	flex-grow: 5;
 	padding: 5rem 15rem;
-	border: 1px solid #E00582;
 }
 
 .song-infos span {
@@ -131,4 +129,20 @@ a, a:hover, a:visited {
 .btn-addSong:hover {
 	transform: scale(1.05);
 	opacity: 0.8;
+}
+
+@media screen and (max-width: 880px) {
+	.playlist-container {
+		margin: 100px auto;
+	}
+	.songs-list {
+		padding: 50px;
+	}
+	
+}
+@media screen and (max-width: 480px) {
+	.songs-list {
+		padding: 20px;
+	}
+	
 }

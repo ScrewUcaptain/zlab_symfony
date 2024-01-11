@@ -26,7 +26,7 @@
 			{{ form_row(registrationForm.lastname) }}
 			<div style="margin: 2rem 0" class="thumbnail-input">
 				{{ form_row(registrationForm.thumbnail) }}
-				<div class="image-name"></div>
+				<div class="image-name">No file.</div>
 			</div>
 			{{ form_row(registrationForm.password, {
 				label: 'Password'
@@ -37,6 +37,12 @@
 	</div>
 
 	<script>
-		
+		const thumbnailInput = document.querySelector('#registration_form_thumbnail');
+		thumbnailInput.addEventListener('change', (e) => {
+			const image = e.target.files[0];
+			const imageName = image.name;
+			const imageNameDiv = document.querySelector('.image-name');
+			imageNameDiv.innerHTML = imageName;
+		});
 	</script>
 {% endblock %}

@@ -1,0 +1,10 @@
+{% extends "playlist/lab.html.twig" %}
+
+{% block title %} Update Playlist {% endblock %}
+
+{% block body %}
+    <h2 class="pl-form-title">Update Playlist: "{{playlist.name}}" </h2>
+    <section class="fm-pl">
+        {{ form(form) }}
+    </section>
+{% endblock %}

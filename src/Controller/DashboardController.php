@@ -32,12 +32,8 @@ class DashboardController extends AbstractController
     }
 
     #[Route('/', name: 'dashboard')]
-	public function dashboard(#[CurrentUser] User $user, EntityManagerInterface $em): Response
+	public function dashboard(EntityManagerInterface $em): Response
 	{
-
-		if (!$this->isGranted('ROLE_ADMIN')) {
-			return $this->redirectToRoute('app_home');
-		}
         $nbrUsers = $em->getRepository(User::class)->count([]);
         $nbrPlaylists =  $em->getRepository(Playlist::class)->count([]);
         $nbrSongs = $em->getRepository(Song::class)->count([]);

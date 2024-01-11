@@ -6,11 +6,7 @@
 	color: #fff;
 	border-radius: 5px;
 	box-shadow: 0 0 10px #aaa;
-	margin: 8rem auto;
-}
-
-h1 {
-	text-align: center;
+	margin: 15rem auto;
 }
 
 body {
@@ -23,6 +19,10 @@ body {
 	justify-content: space-evenly;
 	align-items: center;
 	margin: 2rem 5rem;
+}
+
+.browse a {
+	background: unset;
 }
 
 .tag-card {
@@ -82,3 +82,19 @@ body {
 .tag-item box-icon {
 	cursor: pointer;
 }
+
+@media (max-width: 880px) {
+	
+
+	.browse {
+		margin-top: 10rem;
+	}
+
+}
+@media (max-width: 490px) {
+	.tags {
+		margin: 0;
+	}
+
+}
+

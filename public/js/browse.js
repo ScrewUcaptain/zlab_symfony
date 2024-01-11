@@ -47,7 +47,8 @@ function renderPlaylists() {
   let html = "";
   gSelectedPlaylists.forEach((plType) => {
     plType.playlists.forEach((playlist) => {
-      html += `<div class="playlist-item">
+      html += `<a href='/playlist/${playlist.id}'>
+	  	<div class="playlist-item" >	
 			<div>
 				<div>${playlist.name}</div>
 				<div style="display:flex;align-items:center;">
@@ -58,7 +59,8 @@ function renderPlaylists() {
 			<div style="padding:0.25rem;">
 				<img class="playlist-image" src="/images/${playlist.cover}" />
 			</div>
-		</div>`;
+		</div>
+	</a>`;
     });
   });
   playlistsContainer.innerHTML = html;

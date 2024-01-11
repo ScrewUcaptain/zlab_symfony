@@ -6,7 +6,10 @@ use App\Entity\Tag;
 use App\Entity\Song;
 use App\Entity\User;
 use App\Entity\Playlist;
+use App\Form\PlaylistType;
+use App\Form\PlaylistUserType;
 use App\Utils\CustomSerializer;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,6 +37,18 @@ class PlaylistController extends AbstractController
 		$playlists = $user->getPlaylists();
 		return $this->render('playlist/index.html.twig', [
 			'palylists' => $playlists,
+		]);
+	}
+
+	#[Route('/all', name: 'all_playlists')]
+	public function getAllPlaylists(EntityManagerInterface $em, CustomSerializer $serializer): Response
+	{
+		$playlists = $em->getRepository(Playlist::class)->findAll();
+		$playlists = $serializer->objectsToArray($playlists, ['tags', 'author']);
+
+		return new JsonResponse([
+			'success' => true,
+			'playlists' => $playlists
 		]);
 	}
 
@@ -144,6 +159,33 @@ class PlaylistController extends AbstractController
 
 		return new JsonResponse([
 			'success' => true,
+		]);
+	}
+
+	#[Route('/{playlist}/update', name: 'playlist_update')]
+	public function updatePlaylist(EntityManagerInterface $em, Request $request, Playlist $playlist): Response
+	{
+		$RequestingUser = $this->getUser();
+		if ($RequestingUser !== $playlist->getAuthor() && !$this->isGranted('ROLE_SUPER_ADMIN')) {
+			return $this->redirectToRoute('app_home');
+		}
+
+		$form = $this->createForm(PlaylistUserType::class, $playlist);
+		$form->handleRequest($request);
+		if ($form->isSubmitted() && $form->isValid()) {
+			$playlist = $form->getData();
+			$name = $form->get('name')->getData();
+			$playlist->setName(htmlspecialchars($name, ENT_QUOTES | ENT_HTML5));
+			$playlist->setUpdatedAt(new \DateTime('now', new \DateTimeZone('Europe/Paris')));
+			$em->persist($playlist);
+			$em->flush();
+			return $this->redirectToRoute('app_lab');
+		}
+		$em->persist($playlist);
+		$em->flush();
+		return $this->render('form/update-playlist-user.html.twig', [
+			'form' => $form->createView(),
+			'playlist' => $playlist,
 		]);
 	}
 }

@@ -13,13 +13,14 @@
 {% endblock %}
 
 {% block body %}
-	<section class="lab" style="margin: 10rem auto">
+	<main class="lab" style="margin: 12rem auto">
 		
-		<h1>Create and Manage your playlist in the LAB</h1>
-
-		<div class="lab-container">
+		<h2 style="margin: 1rem">Create and Manage your playlist in the LAB</h2>
+		
+		<section class="lab-container">
 			<div class="profil">
-			<h3>Your profil</h3>
+			<p class="btn-close" onclick="closeProfil()">✖</p>
+				<h3>Your profil</h3>
 				<div class="profil-thumbnail">
 				{% if user.thumbnail and user.thumbnail is not same as null %}
 					<img src="{{asset('images/thumbnails/')}}{{user.thumbnail}}" alt="">
@@ -30,34 +31,40 @@
 				<div class="profil-infos">
 					<div class="profil-lastname">{{user.lastname}} {{user.firstname}}</div>
 					<div class="profil-email">{{user.email}}</div>
-					<button class="blue-button" onclick="updateProfil()"> Modify </button>
 				</div>
 			</div>
-
+			
 			<div class="playlists-container">
 				<h3 style="font-size: 24px">Your playlists</h3>
-				<button class="btn-add" onclick="openModal()">Create Playlist</button>
+				<div class="btns">
+					<button class="btn-profil" onclick="openProfil()"> Profil </button>
+					<button class="btn-add" onclick="openModal()">Create Playlist</button>
+				</div>
 				<div class="playlists">
 					{% if playlists is empty %}
 					No playlisy yet, <br>
 					Create your first playlist !
-				{% endif %}
+					{% endif %}
 					{% for playlist in playlists %}
 						<div class="playlist-card">
 							<div class="playlist-infos">
 								<div>{{playlist.name}}</div>
 								<div>
 									{% for tag in playlist.tags %}
-										<span class="tag">{{tag.name}}</span>
+										<span class="tag">{{tag.name|capitalize}}</span>
 									{% endfor %}
 									-- {{playlist.likes}} <box-icon name='star' type='solid' color='#fbd902' style="padding-top: 10px;"></box-icon>
 								</div>
 							</div>
 							<div class="playlist-actions">
+								<a href="{{path('playlist', {'playlist': playlist.id})}}">
+									<box-icon name='right-arrow' type='solid' ></box-icon>
+								</a>
+								<a href="{{path('playlist_update', {'playlist': playlist.id})}}">
+									<box-icon type='solid' name='edit-alt'></box-icon>
+								</a>
 								
-								<box-icon name='right-arrow' type='solid' ><a href="{{path('playlist', {'playlist': playlist.id})}}"></a></box-icon>
-								<box-icon type='solid' name='edit-alt'></box-icon>
-								<box-icon name='trash' type='solid' ></box-icon>
+								<box-icon name='trash' type='solid' onclick="deletePlaylist({{playlist.id}})" ></box-icon>
 							</div>
 						</div>
 
@@ -101,7 +108,7 @@
 						</div>
 					</div>
 			</div>
-		</div>
+		</section>
 
-	</section>
+	</main>
 {% endblock %}

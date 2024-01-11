@@ -29,6 +29,14 @@ class PlaylistRepository extends ServiceEntityRepository
 			->setParameter('tag',  $tag)
 			->getQuery()
 			->getResult();
+
+			// same in sql
+			// $sql = SELECT * FROM playlist p
+			// JOIN playlist_tag pt ON p.id = pt.playlist_id
+			// WHERE pt.tag_id = :tag
+			
+
+
 	}
 
 //    /**

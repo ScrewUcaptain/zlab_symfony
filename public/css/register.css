@@ -1,7 +1,7 @@
 .form-container {
 	width: 100%;
 	padding: 1rem 25%;
-	margin: 10rem auto;
+	margin: 20rem auto;
 	color: #FFF;
 }
 
@@ -57,4 +57,17 @@ input[type=text],input[type=password], select {
 	color: #FFF;
 	background: #6fbbb7;
 	border: 2px solid #FFF;
+	display: block;
+  }
+
+  .image-name {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+  }
+
+  .thumbnail-input {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
   }

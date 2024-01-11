@@ -5,30 +5,47 @@
 		</a>
 		<h1>Z-LAB</h1>
 	</div>
-	<div class="navbar-menu">
-		<div class="navbar-end">
-			{% if page is not defined %}
-				{% set page = "" %}
-			{% endif %}
+	<div class="navbar-end">
+		{% if page is not defined %}
+			{% set page = "" %}
+		{% endif %}
+		{% if page is not same as "home" %}
+			<a class="navbar-link" href="{{ path('app_home') }}">Home</a>
+		{% endif %}
+		{% if page is not same as "browse" %}
+			<a class="navbar-link" href="{{ path('app_browse') }}">Browse</a>
+		{% endif %}
+		{% if page is not same as "lab" %}
+			<a class="navbar-link" style="margin-right: 3rem" href="{{ path('app_lab') }}">My Lab</a>
+		{% endif %}
+		{% if app.user %}
+			<a class="navbar-link" style="font-size: 1.5rem" href="{{ path('app_logout') }}">Logout</a>
+		{% else %}
+			<a class="navbar-link" style="font-size: 1.5rem" href="{{ path('app_register') }}">Register</a>
+			<a class="navbar-link" style="font-size: 1.5rem" href="{{ path('app_login') }}">Login</a>
+		{% endif %}	
+	</div>
+	<div class="menuburger"> 
+		<span class="burger-icon" onclick="toggleBurgerMenu()">
+			☰
+		</span>
+		<div class="burger-links">
 			
-			{% if page is not same as "home" %}
-				<a class="navbar-link" href="{{ path('app_home') }}">Home</a>
-			{% endif %}
-			{% if page is not same as "browse" %}
-				<a class="navbar-link" href="{{ path('app_browse') }}">Browse</a>
-			{% endif %}
-			{% if page is not same as "lab" %}
-				<a class="navbar-link" style="margin-right: 3rem" href="{{ path('app_lab') }}">My Lab</a>
-			{% endif %}
-		
-			{% if app.user %}
-				<a class="navbar-link" style="font-size: 1.15rem" href="{{ path('app_logout') }}">Logout</a>
-			{% else %}
-				<a class="navbar-link" style="font-size: 1.15rem" href="{{ path('app_register') }}">Register</a>
-				<a class="navbar-link" style="font-size: 1.15rem" href="{{ path('app_login') }}">Login</a>
-			{% endif %}
-			
-			
+		{% if page is not same as "home" %}
+			<a class="burger-link" href="{{ path('app_home') }}">Home</a>
+		{% endif %}
+		{% if page is not same as "browse" %}
+			<a class="burger-link" href="{{ path('app_browse') }}">Browse</a>
+		{% endif %}
+		{% if page is not same as "lab" %}
+			<a class="burger-link" href="{{ path('app_lab') }}">My Lab</a>
+		{% endif %}
+		{% if app.user %}
+			<a class="burger-link" href="{{ path('app_logout') }}">Logout</a>
+		{% else %}
+			<a class="burger-link" href="{{ path('app_register') }}">Register</a>
+			<a class="burger-link" href="{{ path('app_login') }}">Login</a>
+		{% endif %}	
 		</div>
 	</div>
 </nav>

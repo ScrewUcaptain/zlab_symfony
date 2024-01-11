@@ -5,8 +5,14 @@
 	box-sizing: border-box;
 }
 
+html {
+	font-size: 62.5%;
+}
+
 body {
 	margin: 0;
+	padding: 0;
+	font-size: 1.6rem;
 	height: 100vh;
 	background: #0D1117;
 	overflow: hidden;
@@ -48,6 +54,7 @@ a:hover {
 .navbar {
 	position: fixed;
 	width: 100vw;
+	height: 150px;
 	top: 0;
 	display: flex;
 	justify-content: space-between;
@@ -55,9 +62,11 @@ a:hover {
 	background: #003460;
 	color: #FFF ;
 	padding: 0 1.5rem;
-	font-size: 2rem;
+	font-size: 3rem;
 	font-weight: bold;
 	box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+	z-index: 1;
+
 }
 
 .navbar-brand {
@@ -66,10 +75,6 @@ a:hover {
 	justify-content: center;
 }
 
-.navbar-menu {
-	padding: 2rem;
-	flex-grow: 2;
-}
 
 .navbar-link {
 	margin-left: 1.5rem;
@@ -78,6 +83,8 @@ a:hover {
 .navbar-end {
 	display: flex;
 	justify-content: flex-end;
+	padding: 2rem;
+	flex-grow: 2;
 }
 
 .app-logo {
@@ -85,10 +92,8 @@ a:hover {
 }
 
 .intro {
-	/*max-width: 60vw;
-	height: 50vh;*/
-	margin: 17.5rem auto;
-	font-size: 2rem;
+	margin: 275px auto;
+	font-size: 4rem;
 	color: #FFF;
 	text-align: center;
 	position: relative;
@@ -110,9 +115,10 @@ a:hover {
 }
 
 .trends {
+	display: none;
 	text-align: center;
 	position: relative;
-	bottom: -450px;
+	margin: 10rem;
 }
 
 .trends-title {
@@ -185,6 +191,45 @@ a:hover {
 	display: flex;
 	align-items: center;
 }
+.menuburger {
+	display: none;
+}
+
+.burger-icon {
+	cursor: pointer;
+}
+
+.burger-links {
+	padding: 0.5rem;
+	display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100px;
+    right: 20px;
+	background: #FFF;
+	color: black;
+	border-radius: 10px;
+}
+.burger-links a{
+	background: unset;
+	margin: 0.25rem 0.25rem;
+}
+.burger-links a:hover{
+	color: #0a5596;
+}
+
+.burger-link {
+	font-size: 2rem;
+	color: black;
+}
+.pl-form-title {
+	margin-top: 18rem;
+	color: white;
+}
+
+h1 {
+	font-size: 4rem;
+}
 
 @keyframes trendsUp-desktop {
 	0% {
@@ -228,5 +273,64 @@ a:hover {
 
 	90% {
 		transform: translateX(-8px);
+	}
+}
+
+/*// Mobile*/
+
+@media (max-width: 880px) {
+
+	
+
+	.menuburger {
+		display: flex;
+	}
+
+	.navbar-end {
+		display: none;
+	}
+
+	.intro {
+		font-size: 3rem;
+	}
+
+	.navbar {
+		height: 100px;
+	}
+
+	.trends {
+		margin-top: 20rem;
+		bottom: 0;
+	}
+
+	.trends-list {
+		display: flex;
+		flex-flow: column wrap;
+		justify-content: center;
+		align-items: center;
+		max-width: 100vw;
+		margin-top: 10rem;
+	}
+
+	.trends-item {
+		margin: 1rem 0;
+	}
+
+	body {
+		overflow: scroll;
+	}
+
+	.intro-text {
+		padding: 1rem;
+	}
+
+	.navbar {
+		padding-right: 50px;
+	}
+}
+
+@media (max-width: 490px) {
+	.navbar {
+		padding-right: 20px;
 	}
 }
